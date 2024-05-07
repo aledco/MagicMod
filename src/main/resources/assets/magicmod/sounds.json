@@ -1,0 +1,8 @@
+{
+  "basic_magic_cast": {
+    "subtitle": "sounds.magicmod.basic_magic_cast",
+    "sounds": [
+      "magicmod:basic_magic_cast"
+    ]
+  }
+}
