@@ -19,6 +19,7 @@ public class ModItemGroups {
                         .icon(() -> new ItemStack(ModItems.BASIC_WAND)).entries(((displayContext, entries) -> {
                             entries.add(ModItems.BASIC_WAND);
                             entries.add(ModItems.FIRE_WAND);
+                            entries.add(ModItems.HEALING_WAND);
                         })).build());
     }
 

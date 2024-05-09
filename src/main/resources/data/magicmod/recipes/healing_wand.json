@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "equipment",
   "pattern": [
-    "M",
+    "G",
     "O",
     "O"
   ],
@@ -10,11 +10,11 @@
     "O": {
       "item": "minecraft:obsidian"
     },
-    "M": {
-      "item": "minecraft:magma_block"
+    "G": {
+      "item": "minecraft:glowstone"
     }
   },
   "result": {
-    "item": "magicmod:fire_wand"
+    "item": "magicmod:healing_wand"
   }
 }

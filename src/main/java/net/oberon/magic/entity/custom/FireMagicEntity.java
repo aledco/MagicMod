@@ -8,7 +8,6 @@ import net.oberon.magic.entity.ModEntities;
 
 public class FireMagicEntity extends FireballEntity {
     private final static float SPEED = 3f;
-    private final static int MAX_TICKS = 256;
 
     private int ticks = 0;
 
@@ -31,7 +30,7 @@ public class FireMagicEntity extends FireballEntity {
     public void tick() {
         super.tick();
         this.ticks++;
-        if (this.ticks >= MAX_TICKS && !this.getWorld().isClient) {
+        if (this.ticks >= ModEntities.MAX_TICKS && !this.getWorld().isClient) {
             this.discard();
         }
     }

@@ -1,33 +1,33 @@
 package net.oberon.magic.item.custom;
 
-import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolItem;
-import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.oberon.magic.enchantment.custom.AbstractMagicEnchantment;
 import net.oberon.magic.entity.custom.BasicMagicEntity;
 import net.oberon.magic.item.ModToolMaterials;
 
-public abstract class AbstractWandItem extends ToolItem {
+public class WandItem extends ToolItem {
     private long timeOfLastUse = 0;
 
-    public AbstractWandItem(Settings settings) {
+    public WandItem(Settings settings) {
         super(ModToolMaterials.WAND, settings);
     }
 
-    abstract int timeBetweenUses();
+    protected int timeBetweenUses() {
+        return 20;
+    }
 
-    abstract int useDamage();
+    protected int useDamage() {
+        return 1;
+    }
 
     protected Entity magicEntity(World world, PlayerEntity user, ItemStack stack) {
         if (stack.hasEnchantments()) {
@@ -75,11 +75,5 @@ public abstract class AbstractWandItem extends ToolItem {
         // damage
         stack.damage(useDamage(), user, p -> p.sendToolBreakStatus(user.getActiveHand()));
         return TypedActionResult.success(stack);
-    }
-
-    @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        stack.damage(2, miner, p -> p.sendToolBreakStatus(miner.getActiveHand()));
-        return true;
     }
 }

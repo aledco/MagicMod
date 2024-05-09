@@ -2,6 +2,7 @@ package net.oberon.magic;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.oberon.magic.enchantment.ModEnchantments;
 import net.oberon.magic.entity.ModEntities;
 import net.oberon.magic.item.ModItemGroups;
 import net.oberon.magic.item.ModItems;
@@ -20,5 +21,6 @@ public class MagicMod implements ModInitializer {
 		ModItems.registerModItems();
 		ModEntities.registerEntities();
 		ModSounds.registerSounds();
+		ModEnchantments.registerEnchantments();
 	}
 }

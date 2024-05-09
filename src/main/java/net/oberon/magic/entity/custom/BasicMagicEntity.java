@@ -23,7 +23,6 @@ import net.oberon.magic.item.ModItems;
 public class BasicMagicEntity extends ThrownItemEntity {
     private final static float DAMAGE = 4;
     private final static float SPEED = 0.8f;
-    private final static int MAX_TICKS = 256;
 
     private int ticks = 0;
 
@@ -92,7 +91,7 @@ public class BasicMagicEntity extends ThrownItemEntity {
     public void tick() {
         super.tick();
         this.ticks++;
-        if (this.ticks >= MAX_TICKS && !this.getWorld().isClient) {
+        if (this.ticks >= ModEntities.MAX_TICKS && !this.getWorld().isClient) {
             this.discard();
         }
     }

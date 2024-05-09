@@ -1,6 +1,10 @@
 {
   "item.magicmod.basic_wand": "Wand",
   "item.magicmod.fire_wand": "Fire Wand",
+  "item.magicmod.healing_wand": "Healing Wand",
   "item.magicmod.basic_magic": "Basic Magic",
-  "itemgroup.magic": "Magic"
+
+  "itemgroup.magic": "Magic",
+
+  "enchantment.magicmod.fire_magic": "Fire Magic"
 }
