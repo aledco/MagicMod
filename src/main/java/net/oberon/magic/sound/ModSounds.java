@@ -20,6 +20,5 @@ public class ModSounds {
     }
 
     public static void registerSounds() {
-        MagicMod.LOGGER.info("Registering Sounds for " + MagicMod.MOD_ID);
     }
 }

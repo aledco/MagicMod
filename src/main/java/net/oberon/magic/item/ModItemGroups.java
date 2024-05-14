@@ -16,10 +16,8 @@ public class ModItemGroups {
         MAGIC_GROUP = Registry.register(Registries.ITEM_GROUP,
                 new Identifier(MagicMod.MOD_ID, "magic"),
                 FabricItemGroup.builder().displayName(Text.translatable("itemgroup.magic"))
-                        .icon(() -> new ItemStack(ModItems.BASIC_WAND)).entries(((displayContext, entries) -> {
-                            entries.add(ModItems.BASIC_WAND);
-                            entries.add(ModItems.FIRE_WAND);
-                            entries.add(ModItems.HEALING_WAND);
+                        .icon(() -> new ItemStack(ModItems.WAND)).entries(((displayContext, entries) -> {
+                            entries.add(ModItems.WAND);
                         })).build());
     }
 

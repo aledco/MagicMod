@@ -5,10 +5,12 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
+import net.minecraft.item.Item;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 import net.oberon.magic.entity.ModEntities;
+import net.oberon.magic.item.ModItems;
+import net.oberon.magic.particle.ModParticles;
 
 public class HealingMagicEntity extends AbstractLingeringMagicEntity {
     public HealingMagicEntity(EntityType<? extends HealingMagicEntity> entityType, World world) {
@@ -24,17 +26,19 @@ public class HealingMagicEntity extends AbstractLingeringMagicEntity {
     }
 
     @Override
-    protected float speed() {
-        return 2.0f;
+    protected void configureEffectCloud(AreaEffectCloudEntity effectCloud) {
+        effectCloud.setRadius(2.0f);
+        effectCloud.setDuration(300);
+        effectCloud.addEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1));
     }
 
     @Override
     protected ParticleEffect getParticleType() {
-        return ParticleTypes.GLOW;
+        return ModParticles.HEALING_MAGIC;
     }
 
     @Override
-    protected void addStatusEffects(AreaEffectCloudEntity effectCloud) {
-        effectCloud.addEffect(new StatusEffectInstance(StatusEffects.INSTANT_HEALTH, 1, 1));
+    public Item getDefaultItem() {
+        return ModItems.HEALING_MAGIC;
     }
 }

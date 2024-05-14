@@ -1,5 +1,6 @@
 package net.oberon.magic.entity;
 
+import com.mojang.datafixers.DataFixerUpper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -20,18 +21,17 @@ public class ModEntities {
     static {
         BASIC_MAGIC = Registry.register(Registries.ENTITY_TYPE,
                 new Identifier(MagicMod.MOD_ID, "basic_magic"),
-                EntityType.Builder.create(BasicMagicEntity::create, SpawnGroup.MISC).build());
+                EntityType.Builder.create(BasicMagicEntity::create, SpawnGroup.MISC).build("basic_magic"));
 
         FIRE_MAGIC = Registry.register(Registries.ENTITY_TYPE,
                 new Identifier(MagicMod.MOD_ID, "fire_magic"),
-                EntityType.Builder.create(FireMagicEntity::create, SpawnGroup.MISC).build());
+                EntityType.Builder.create(FireMagicEntity::create, SpawnGroup.MISC).build("fire_magic"));
 
         HEALING_MAGIC = Registry.register(Registries.ENTITY_TYPE,
-                new Identifier(MagicMod.MOD_ID, "dragon_magic"),
-                EntityType.Builder.create(HealingMagicEntity::create, SpawnGroup.MISC).build());
+                new Identifier(MagicMod.MOD_ID, "healing_magic"),
+                EntityType.Builder.create(HealingMagicEntity::create, SpawnGroup.MISC).build("healing_magic"));
     }
 
     public static void registerEntities() {
-        MagicMod.LOGGER.info("Registering Entities for " + MagicMod.MOD_ID);
     }
 }

@@ -9,22 +9,21 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 import net.oberon.magic.MagicMod;
-import net.oberon.magic.item.custom.BasicMagicItem;
-import net.oberon.magic.item.custom.BasicWandItem;
-import net.oberon.magic.item.custom.HealingWandItem;
-import net.oberon.magic.item.custom.FireWandItem;
+import net.oberon.magic.item.custom.WandItem;
 
 public class ModItems {
-    public static final Item BASIC_WAND = registerItem("basic_wand", new BasicWandItem(new FabricItemSettings()));
-    public static final Item FIRE_WAND = registerItem("fire_wand", new FireWandItem(new FabricItemSettings()));
-    public static final Item HEALING_WAND = registerItem("healing_wand", new HealingWandItem(new FabricItemSettings()));
+    public static final Item WAND;
+    public static final Item BASIC_MAGIC;
+    public static final Item HEALING_MAGIC;
 
-    public static final Item BASIC_MAGIC = registerItem("basic_magic", new BasicMagicItem(new FabricItemSettings()));
+    static {
+        WAND = registerItem("wand", new WandItem(new FabricItemSettings()));
+        BASIC_MAGIC = registerItem("basic_magic", new Item(new FabricItemSettings()));
+        HEALING_MAGIC = registerItem("healing_magic", new Item(new FabricItemSettings()));
+    }
 
     private static void addItemsToToolsTabItemGroup(FabricItemGroupEntries entries) {
-        entries.add(BASIC_WAND);
-        entries.add(FIRE_WAND);
-        entries.add(HEALING_WAND);
+        entries.add(WAND);
     }
 
     private static Item registerItem(String name, Item item) {

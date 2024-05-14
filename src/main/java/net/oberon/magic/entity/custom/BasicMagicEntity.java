@@ -5,13 +5,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.listener.ClientPlayPacketListener;
 import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.hit.EntityHitResult;
@@ -19,6 +16,7 @@ import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
 import net.oberon.magic.entity.ModEntities;
 import net.oberon.magic.item.ModItems;
+import net.oberon.magic.particle.ModParticles;
 
 public class BasicMagicEntity extends ThrownItemEntity {
     private final static float DAMAGE = 4;
@@ -26,9 +24,8 @@ public class BasicMagicEntity extends ThrownItemEntity {
 
     private int ticks = 0;
 
-    public BasicMagicEntity(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public BasicMagicEntity(EntityType<? extends BasicMagicEntity> entityType, World world) {
         super(entityType, world);
-        this.setNoGravity(true);
     }
 
     public BasicMagicEntity(World world, LivingEntity owner) {
@@ -38,7 +35,7 @@ public class BasicMagicEntity extends ThrownItemEntity {
         this.setVelocity(owner, owner.getPitch(), owner.getYaw(), -1.0f, SPEED, 1.0f);
     }
 
-    public static BasicMagicEntity create(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public static BasicMagicEntity create(EntityType<? extends BasicMagicEntity> entityType, World world) {
         return new BasicMagicEntity(entityType, world);
     }
 
@@ -62,18 +59,15 @@ public class BasicMagicEntity extends ThrownItemEntity {
         }
     }
 
-    private ParticleEffect getParticleParameters() {
-        ItemStack itemStack = this.getItem();
-        return itemStack.isEmpty() ? ParticleTypes.SPLASH : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
-    }
-
     @Override
     public void handleStatus(byte status) {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
-            this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_ENDER_EYE_DEATH, SoundCategory.AMBIENT, 3.0f, 1.0f);
-            ParticleEffect particleEffect = this.getParticleParameters(); // TODO get death sound to work and see what happens when particle velocity is turned up
-            for (int i = 0; i < 32; ++i) {
-                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), 0.0, 0.0, 0.0);
+            var particleEffect = this.getParticleType(); // TODO get death sound to work and see what happens when particle velocity is turned up
+            for (int i = 0; i < 64; ++i) {
+                var velX = (this.random.nextFloat() - 0.5f) * 0.2f;
+                var velY = (this.random.nextFloat() - 0.5f) * 0.2f;
+                var velZ = (this.random.nextFloat() - 0.5f) * 0.2f;
+                this.getWorld().addParticle(particleEffect, this.getX(), this.getY(), this.getZ(), velX, velY, velZ);
             }
         }
     }
@@ -81,6 +75,7 @@ public class BasicMagicEntity extends ThrownItemEntity {
     @Override
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
+        this.getWorld().playSound(null, this.getX(), this.getY(), this.getZ(), SoundEvents.ENTITY_SPLASH_POTION_BREAK, SoundCategory.AMBIENT, 1.0f, 2.0f);
         if (!this.getWorld().isClient) {
             this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
             this.discard();
@@ -94,5 +89,15 @@ public class BasicMagicEntity extends ThrownItemEntity {
         if (this.ticks >= ModEntities.MAX_TICKS && !this.getWorld().isClient) {
             this.discard();
         }
+
+        var vel = this.getVelocity();
+        var d = this.getX() + vel.x;
+        var e = this.getY() + vel.y;
+        var f = this.getZ() + vel.z;
+        this.getWorld().addParticle(getParticleType(), d, e + 0.125, f, 0.0, 0.0, 0.0);
+    }
+
+    private ParticleEffect getParticleType() {
+        return ModParticles.BASIC_MAGIC;
     }
 }
